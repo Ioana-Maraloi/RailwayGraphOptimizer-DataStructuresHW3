@@ -1,78 +1,45 @@
-# SDA
-implementarea temei mi-a luat aproximativ 25 de ore.
-taskul 1:
-pentru taskul 1 am 3 structuri: 
--structura de graf,in care pastrez numarul 
-de orase si listele de adiacenta, precum si orasele pe care le am in graf,
-fara ca acestea sa se repete. cand citesc un oras, verific daca il am deja
-in graf cities( daca il am, atunci returnez pozitia aceasta si adaug vecin
-la lista cu pozitia corespunzatoare. daca nu am acest oras, returnez -1 si adaug 
-inca un oras si intializez inca o lista).
-- structura de lista, in care retin head-ul listei si lungimea.
-- structura de nod, in care retin numele nodului(numele destinatiei), numarul
- de tronsoane si degradarea( am doua varainte de degradare, oldDegradation 
- si degradation).
-functia task1: daca argv[1] este 1, atunci inseamna ca testez taskul 1 si 
-apelez functia. citesc din fisier r, k si l, apoi initializez graful cu 2*r nr
-noduri. in routes retin rutele citite din fisier in ordinea in care sunt 
-citite, routes[i] contine perechea i din fisierul de intrare.citesc liniile din
-fisier, verific daca am deja orasul1 si orasul2 in graf. daca nu le am, mai adaug
-o lista. daca le am, retin pozitiile la care le-am gasit in vectorul de orase
-(g->cities). adaug in lista poz1 nodul city2, cu nrtrons tronsoane si gradele de 
-degradare asa cum sunt in fisier. adaug si in lista lui city2, orasul city1, cu 
-gradele de degradare inversate. apoi, pentru k ani, parcurg tot graful, in 
-ordinea in care mi-a fost dat( iau prima pereche de orase din routes, caut la ce
-pozitii se afla cele 2 orase la mine in graf(poscity1 si poscity2) si apelez decay 
-si updatepaths). dupa ce parcurg tot graful, updatez degradarile. afisez rutele
-in fisier si eliberez memoria pentru routes, cities si graf.
-initgraph: am initializat structura de graf, cu 2*r orase, acesta fiind nr 
-maxim de orase posibile. am pus zero la numar de noduri, urmand sa cresc acest numar
-atunci cand citesc un oras nou. am initializat si listele de adiacenta cu NULL.
-checkcity: daca gasesc orasul in graf, returnez pozitia acestuia. daca nu, 
-returnez -1.
-add_node: daca nu am orasul in graf, apelez aceasta functie si il adaug la 
-ultima pozitie in vectorul de orase si initializez inca o lista de adiacenta.
-add_list: adaug in lista de la pozitia pos, orasul city. aloc un nou nod, 
-copiez numele orasului destinatie si returnez nodul.
-add_edge: adaug muchia intre 2 orase, cu numarul de tronsoane si degradarea.
-adaug in lista un nou nod, si verific daca mai am ceva in lista respectiva( daca
-nu mai am, atunci nodul devine head si pointeaza la null, daca mai am, 
-adaug la inceputul listei). aloc memorie pentru a retine gradul de degradare pt
-fiecare tronson si copiez.
-decay: retin in source si destination numele oraselor pe care le caut. caut in
-lista cu indexul pos1, orasul destinatie. daca l-am gasit, atunci parcurg 
-tronsoanele. daca degradarea de pe tronsonul [i] este diferita de zero, o compar
-cu 50. daca e mai mica de 50, atunc o dublez, daca e mai mare atunci pun direct 
-100. daca degradarea este zero, verific unde se afla acest tronson. daca tronsonul
-e la mijloc, fac maximul vecinilor si impart la 2. daca se afla in margine, atunci
-apelez functiile updateFirstSector sau lastSector. apoi updatez degradarea in lista
-destinatiei, la nodul corespunzator sursei.
-updateFirstSector: initializez un vector de lungime egala cu nr de noduri din
-lista sursei. parcurg lista sursei si verific daca orasul este destinatia sau nu
-(daca e destinatia, verific cate tronsoane are, daca are mai mult de 1, pun nr de
-pe poz1, daca are un singur tronson, pun direct zero. daca nu e destinatia, pun 
-nr de pe poz1).aflu maximul si returnez imaprtit la 2.
-updateLastSector: similar cu updateFirstSector, doar ca parcurg lista destinatiei. 
-updatePaths: caut in lista sursei orasul destinatiei si in lista destinatiei orasul
-sursa. cand le gasesc pe amandoua, copiez vectorul de degradari din lista sursa in
-lista destinatiei doar ca pe dos.
+# Assignment 3 - Data Structures and Algorithms (DSA)
 
-taskul 2:
-funcrtia task2: daca argv[1] este 2, atunci inseamna ca testez taskul 2 si apelez
-functia. similar cu functia task1.
-addNode2: similar cu add_node; la fel pt addEdge.
-algorithm: aloc un vector de lunigme = nr noduri pt a retine daca un nod a fost
-vizitat sau nu. cu vectorul keep marchez perechile de orase(asa cum au fost citite
-din fisier) pe care le voi pastra. initializez acest vector cu zero. initializez heapul
-si alfu pozitia orasului sursa. parcurg toata lista orasului sursa si adaug 
-nodurile in heap, modificandu-le parintele si costul. cat timp heapul nu e gol,
-extrag minimul si aflu pe ce pozitie se alfa acel oras in vectorul de orase, marchez
-pozitia aia ca fiind vizitata. daca inca mai pot sa pastrez drumuri(am luat un k 
-contor), atunci parcurg toate muchiile din vectorul de perechi de orase si caut
-nodul pe care l-am scos din heap si parintele lui. daca am gasit perechea, marchez
-pozitia respectiva in vectorul keep pt a stii sa o afisez si incrementez contorul.
-parcurg lista orasului scos din heap. daca orasul respectiv are drumul pana la 
-sursa mai mic prin ocolirea pe la nodul scos din heap si nu a mai fost vizitat,
-updatez distanta si vectorul de parinte al orasului. verific daca am deja nodul
-in heap si daca nu il am, il adaug. daca il am, ii updatez costul si il mut mai
-in sus.
+## Project Description
+
+This assignment tackles problems related to graphs and the implementation of efficient data structures. The context of the problem involves modeling a European railway system from the 19th century.The project uses adjacency lists for graph representation, as required. The assignment is divided into two major requirements, each with a specific goal:
+## Requirement 1: Modeling railway track wear and tear
+**Objective**: Simulate the wear level of each railway segment after a given number of years, considering interactions between neighboring segments.
+
+Input:
+
+- Number of routes (R), years (K), and acceptable wear level (L).
+
+- List of routes with city names, segments, and initial wear levels.
+
+Output:
+
+- Updated wear levels for each route and indices of preserved routes.
+  
+Details: Each route is divided into segments, each with an initial wear level.
+Wear propagates between segments based on their proximity and doubles annually.
+After K years, generate a list of routes worth preserving, based on an acceptable average wear level.
+
+## Requirement 2: Reducing the number of railways
+**Objective**: Determine an optimal subnetwork of railways to maximize profitability while preserving at most a specified number of railways.
+Profitability is defined by the number of cities for which the shortest path costs remain unchanged.
+
+Input:
+
+- Starting city, maximum railways to retain (K), and total railways (M).
+
+- List of railways with connected cities and distances.
+
+Output:
+
+- Number of railways retained and their details.
+  
+### Key implementation highlights include:
+
+**Propagation Logic**: For Requirement 1, the wear propagation between segments is handled iteratively. The maximum wear from neighboring segments is used to compute updates, ensuring accuracy in the simulation.
+
+**Graph Traversals**: Breadth-First Search (BFS) and Depth-First Search (DFS) are used for analyzing graph connectivity and updating component states.
+
+**Shortest Path Preservation**: For Requirement 2, a priority queue-based Dijkstra algorithm ensures efficient computation of shortest paths and evaluates the impact of removing railways.
+
+**Memory Management**: Dynamic memory allocation is managed carefully to avoid leaks, and the implementation is tested with Valgrind.
